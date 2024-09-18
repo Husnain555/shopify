@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Page,
     Card,
@@ -9,15 +9,47 @@ import {
     LegacyCard,
     useSetIndexFiltersMode,
     useIndexResourceState,
-    DropZone,
     Avatar,
     TextContainer,
     Text,
     Box,
-    LegacyStack
+    LegacyStack, Divider
 } from '@shopify/polaris';
- function Index() {
+
+function Index() {
     const [selected, setSelected] = useState(0);
+    const [summaryData, setSummaryData] = useState({
+        suppliers: 0,
+        vendors: 0,
+        inventory: 0,
+        warehouseLocations: 0,
+        potentialRevenue: 0,
+        potentialGrossProfit: 0,
+    });
+
+    //  real-time data fetching
+    useEffect(() => {
+        const fetchData = async () => {
+
+            const response = await fetch('/api/summary-data');
+            const data = await response.json();
+
+            setSummaryData({
+                suppliers: data.suppliers,
+                vendors: data.vendors,
+                inventory: data.inventory,
+                warehouseLocations: data.warehouseLocations,
+                potentialRevenue: data.potentialRevenue,
+                potentialGrossProfit: data.potentialGrossProfit,
+            });
+        };
+
+        fetchData(); // Fetch initial data
+        const intervalId = setInterval(fetchData, 60000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
     const disambiguateLabel = (key, value) => {
         switch (key) {
             case "type":
@@ -230,90 +262,140 @@ import {
             inventory: "20 in stock",
             type: "Brew Gear",
             vendor: "Espresso Shot Coffee",
-            dropshipsupplier   : 'Steeler',
+            dropshipsupplier: 'Steeler',
             warehouseLocation: 'Pakistan',
-            subcategory:'T-Shirt',
-            quentity:'30',
-            unitcosteur:'30 EUR',
-            costofdropshippingcarriereur:'9.8 EUR',
-            unitcostEGP:'300 EGP',
-            unitcostusd:'40 USD',
-            costofkgusd:'25.98 USD',
-            costofgramUSD:'0.03 USD',
-            unitweightGR:'185 gm',
-            unitcostincludingweightusd:'9.41 USD',
-            unitcostincludingweightegp:'300 EGP',
-            crossmargin: '25%',
-            finalprice:'300 EGP'
-        },
+            subcategory: 'T-Shirt',
+            quentity: '30',
+            unitcosteur: '30 EUR',
+            costofdropshippingcarriereur: '9.8 EUR',
+            unitcostEGP: '300 EGP',
+            unitcostusd: '40 USD',
+            costofkgusd: '25.98 USD',
+            costofgramUSD: '0.03 USD',
+            unitweightGR: '185 gm',
+            unitcostincludingweightusd: '9.8 USD',
+            unitcostincludingweightegp: '12.3 EGP',
+            crossmargin: '50%',
+            finalprice: '80 USD'
+        }
+        // Add more products as needed
     ];
+
+    const { allResourcesSelected, selectedResources, handleSelectionChange } = useIndexResourceState(products);
+
     const resourceName = {
-        singular: "product",
-        plural: "products",
+        singular: "Product",
+        plural: "Products",
     };
 
-    const { selectedResources, allResourcesSelected, handleSelectionChange } = useIndexResourceState(products);
-
-    const rowMarkup = products.map(({
-                                        id, product, tone, inventory, type, vendor, dropshipsupplier, warehouseLocation, subcategory, quentity, unitcosteur,
-                                        costofdropshippingcarriereur, unitcostEGP, unitcostusd, costofkgusd, costofgramUSD, unitweightGR,
-                                        unitcostincludingweightusd, unitcostincludingweightegp, crossmargin,finalprice
-                                    }, index) => (
-        <IndexTable.Row
-            id={id}
-            key={id}
-            selected={selectedResources.includes(id)}
-            position={index}
-        >
-            <IndexTable.Cell>
-                <div style={{display:"flex",alignItems:"center",gap:'10px'}}>
-                <Avatar source={'https://static4.depositphotos.com/1013245/356/i/950/depositphotos_3561159-stock-photo-luxuru-black-leather-jacket-isolated.jpg'} />{product}
-                </div>
-            </IndexTable.Cell>
-            <IndexTable.Cell>{tone}</IndexTable.Cell>
-            <IndexTable.Cell>{inventory}</IndexTable.Cell>
-            <IndexTable.Cell>{type}</IndexTable.Cell>
-            <IndexTable.Cell>{vendor}</IndexTable.Cell>
-            <IndexTable.Cell>{dropshipsupplier}</IndexTable.Cell>
-            <IndexTable.Cell>{warehouseLocation}</IndexTable.Cell>
-            <IndexTable.Cell>{subcategory}</IndexTable.Cell>
-            <IndexTable.Cell>{quentity}</IndexTable.Cell>
-            <IndexTable.Cell>{unitcosteur}</IndexTable.Cell>
-            <IndexTable.Cell>{costofdropshippingcarriereur}</IndexTable.Cell>
-            <IndexTable.Cell>{unitcostusd}</IndexTable.Cell>
-            <IndexTable.Cell>{unitcostEGP}</IndexTable.Cell>
-            <IndexTable.Cell>{costofkgusd}</IndexTable.Cell>
-            <IndexTable.Cell>{costofgramUSD}</IndexTable.Cell>
-            <IndexTable.Cell>{unitweightGR}</IndexTable.Cell>
-            <IndexTable.Cell>{unitcostincludingweightusd}</IndexTable.Cell>
-            <IndexTable.Cell>{unitcostincludingweightegp}</IndexTable.Cell>
-            <IndexTable.Cell>{crossmargin}</IndexTable.Cell>
-            <IndexTable.Cell>{finalprice}</IndexTable.Cell>
-        </IndexTable.Row>
-    ));
+    const rowMarkup = products.map(
+        (
+            {
+                id,
+                product,
+                tone,
+                inventory,
+                type,
+                vendor,
+                dropshipsupplier,
+                warehouseLocation,
+                subcategory,
+                quentity,
+                unitcosteur,
+                costofdropshippingcarriereur,
+                unitcostusd,
+                unitcostEGP,
+                costofkgusd,
+                costofgramUSD,
+                unitweightGR,
+                unitcostincludingweightusd,
+                unitcostincludingweightegp,
+                crossmargin,
+                finalprice
+            },
+            index
+        ) => (
+            <IndexTable.Row id={id} key={id} selected={selectedResources.includes(id)}>
+                <IndexTable.Cell>
+                    <div style={{ display: "flex", alignItems: "center", gap: '10px' }}>
+                        <Avatar source={'https://static4.depositphotos.com/1013245/356/i/950/depositphotos_3561159-stock-photo-luxuru-black-leather-jacket-isolated.jpg'} />{product}
+                    </div>
+                </IndexTable.Cell>
+                <IndexTable.Cell>{tone}</IndexTable.Cell>
+                <IndexTable.Cell>{inventory}</IndexTable.Cell>
+                <IndexTable.Cell>{type}</IndexTable.Cell>
+                <IndexTable.Cell>{vendor}</IndexTable.Cell>
+                <IndexTable.Cell>{dropshipsupplier}</IndexTable.Cell>
+                <IndexTable.Cell>{warehouseLocation}</IndexTable.Cell>
+                <IndexTable.Cell>{subcategory}</IndexTable.Cell>
+                <IndexTable.Cell>{quentity}</IndexTable.Cell>
+                <IndexTable.Cell>{unitcosteur}</IndexTable.Cell>
+                <IndexTable.Cell>{costofdropshippingcarriereur}</IndexTable.Cell>
+                <IndexTable.Cell>{unitcostusd}</IndexTable.Cell>
+                <IndexTable.Cell>{unitcostEGP}</IndexTable.Cell>
+                <IndexTable.Cell>{costofkgusd}</IndexTable.Cell>
+                <IndexTable.Cell>{costofgramUSD}</IndexTable.Cell>
+                <IndexTable.Cell>{unitweightGR}</IndexTable.Cell>
+                <IndexTable.Cell>{unitcostincludingweightusd}</IndexTable.Cell>
+                <IndexTable.Cell>{unitcostincludingweightegp}</IndexTable.Cell>
+                <IndexTable.Cell>{crossmargin}</IndexTable.Cell>
+                <IndexTable.Cell>{finalprice}</IndexTable.Cell>
+            </IndexTable.Row>
+        )
+    );
 
     return (
         <Page>
-<Box>
-    <Text variant="headingXl"  alignment={"start"}  as="h1" fontWeight="bold">Product</Text>
+            <Box>
+                <Text variant="headingXl" alignment={"start"} as="h1" fontWeight="bold">Product</Text>
+            </Box>
+            <Box maxWidth="90%" paddingBlockEnd='600' textAlign="center">
+                <LegacyCard sectioned>
+                    <TextContainer>
+                        <LegacyStack distribution="equalSpacing" vertical={false} alignment="center">
+                            <LegacyStack.Item fill>
+                                <Text variant="headingMd" as="h2" fontWeight="bold">Suppliers</Text>
+                                <Text variant="headingMd" fontWeight="bold">{summaryData.suppliers}</Text>
+                            </LegacyStack.Item>
 
-</Box>
-           <Box width={'80%'} padding={'600'}>
-               <LegacyCard title="Product Summary" sectioned>
-                   <TextContainer>
-                       <Text variant="bodyMd" as="h2" fontWeight="semibold">Total Products: {products.length}</Text>
-                       <LegacyStack  spacing="tight">
-                           <Text variant="bodyMd">Vendor: {products[0].vendor}</Text>
-                           <Text variant="bodyMd">Supplier: {products[0].supplier}</Text>
-                           <Text variant="bodyMd">Warehouse: {products[0].Warehouse}</Text>
-                       </LegacyStack>
-                   </TextContainer>
-               </LegacyCard>
-           </Box>
+                            <Divider orientation="vertical" borderWidth='0165' />
 
+                            <LegacyStack.Item fill>
+                                <Text variant="headingMd" as="h2" fontWeight="bold">No Brands</Text>
+                                <Text variant="headingMd" fontWeight="bold">{summaryData.vendors}</Text>
+                            </LegacyStack.Item>
 
+                            <Divider orientation="vertical" />
 
+                            <LegacyStack.Item fill>
+                                <Text variant="headingMd" as="h2" fontWeight="bold">Inventory</Text>
+                                <Text variant="headingMd" fontWeight="bold">{summaryData.inventory}</Text>
+                            </LegacyStack.Item>
 
+                            <Divider orientation="vertical" />
+
+                            <LegacyStack.Item fill>
+                                <Text variant="headingMd" as="h2" fontWeight="bold">Warehouse Locations</Text>
+                                <Text variant="headingMd" fontWeight="bold">{summaryData.warehouseLocations}</Text>
+                            </LegacyStack.Item>
+
+                            <Divider orientation="vertical" />
+
+                            <LegacyStack.Item fill>
+                                <Text variant="headingMd" as="h2" fontWeight="bold">Potential Revenue</Text>
+                                <Text variant="headingMd" fontWeight="bold">{summaryData.potentialRevenue} EGP</Text>
+                            </LegacyStack.Item>
+
+                            <Divider orientation="vertical" />
+
+                            <LegacyStack.Item fill>
+                                <Text variant="headingMd" as="h2" fontWeight="bold">Potential Gross Profit</Text>
+                                <Text variant="headingMd" fontWeight="bold">{summaryData.potentialGrossProfit} EGP</Text>
+                            </LegacyStack.Item>
+                        </LegacyStack>
+                    </TextContainer>
+                </LegacyCard>
+            </Box>
 
             <LegacyCard sectioned>
                 <IndexFilters
