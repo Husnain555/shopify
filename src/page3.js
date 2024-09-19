@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import './index.css'
 import {
     Page,
     Card,
@@ -277,8 +278,7 @@ function Index() {
             unitcostincludingweightegp: '12.3 EGP',
             crossmargin: '50%',
             finalprice: '80 USD'
-        }
-        // Add more products as needed
+        },
     ];
 
     const { allResourcesSelected, selectedResources, handleSelectionChange } = useIndexResourceState(products);
@@ -346,53 +346,57 @@ function Index() {
 
     return (
         <Page>
-            <Box>
-                <Text variant="headingXl" alignment={"start"} as="h1" fontWeight="bold">Product</Text>
+            <Box paddingBlockEnd={'800'}>
+                <Text variant="headingXl"  alignment={"start"} as="h1" fontWeight="bold">Product</Text>
             </Box>
-            <Box maxWidth="90%" paddingBlockEnd='600' textAlign="center">
-                <LegacyCard sectioned>
-                    <TextContainer>
-                        <LegacyStack distribution="equalSpacing" vertical={false} alignment="center">
-                            <LegacyStack.Item fill>
-                                <Text variant="headingMd" as="h2" fontWeight="bold">Suppliers</Text>
-                                <Text variant="headingMd" fontWeight="bold">{summaryData.suppliers}</Text>
-                            </LegacyStack.Item>
+            <Box  maxWidth="90%" paddingBlockEnd='600' textAlign="center">
+                <LegacyCard  sectioned>
+                    <TextContainer >
 
-                            <Divider orientation="vertical" borderWidth='0165' />
+                              <div>
+                                  <LegacyStack distribution="equalSpacing" vertical={false} alignment="center">
+                                      <LegacyStack.Item fill>
+                                          <Text variant="headingMd" as="h2" fontWeight="bold">Suppliers</Text>
+                                          <Text variant="headingMd" fontWeight="bold">{summaryData.suppliers}</Text>
+                                      </LegacyStack.Item>
 
-                            <LegacyStack.Item fill>
-                                <Text variant="headingMd" as="h2" fontWeight="bold">No Brands</Text>
-                                <Text variant="headingMd" fontWeight="bold">{summaryData.vendors}</Text>
-                            </LegacyStack.Item>
+                                      <LegacyStack.Item fill>
+                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'} borderColor="border-subdued">
+                                              <Text variant="headingMd" as="h2" fontWeight="bold">No. Brands</Text>
+                                              <Text variant="headingMd" fontWeight="bold">{summaryData.vendors}</Text>
+                                          </Box>
+                                      </LegacyStack.Item>
 
-                            <Divider orientation="vertical" />
+                                      <LegacyStack.Item fill>
+                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
+                                              <Text variant="headingMd" as="h2" fontWeight="bold">Inventory</Text>
+                                              <Text variant="headingMd" fontWeight="bold">{summaryData.inventory}</Text>
+                                          </Box>
+                                      </LegacyStack.Item>
 
-                            <LegacyStack.Item fill>
-                                <Text variant="headingMd" as="h2" fontWeight="bold">Inventory</Text>
-                                <Text variant="headingMd" fontWeight="bold">{summaryData.inventory}</Text>
-                            </LegacyStack.Item>
+                                      <LegacyStack.Item fill>
+                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
+                                              <Text variant="headingMd" as="h2" fontWeight="bold">Warehouse Locations</Text>
+                                              <Text variant="headingMd" fontWeight="bold">{summaryData.warehouseLocations}</Text>
+                                          </Box>
+                                      </LegacyStack.Item>
 
-                            <Divider orientation="vertical" />
+                                      <LegacyStack.Item fill>
+                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
+                                              <Text variant="headingMd" as="h2" fontWeight="bold">Potential Revenue</Text>
+                                              <Text variant="headingMd" fontWeight="bold">{summaryData.potentialRevenue} EGP</Text>
+                                          </Box>
+                                      </LegacyStack.Item>
 
-                            <LegacyStack.Item fill>
-                                <Text variant="headingMd" as="h2" fontWeight="bold">Warehouse Locations</Text>
-                                <Text variant="headingMd" fontWeight="bold">{summaryData.warehouseLocations}</Text>
-                            </LegacyStack.Item>
+                                      <LegacyStack.Item fill>
+                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'} borderColor="border-subdued">
+                                              <Text variant="headingMd" as="h2" fontWeight="bold">Potential Gross Profit</Text>
+                                              <Text variant="headingMd" fontWeight="bold">{summaryData.potentialGrossProfit} EGP</Text>
+                                          </Box>
+                                      </LegacyStack.Item>
+                                  </LegacyStack>
 
-                            <Divider orientation="vertical" />
-
-                            <LegacyStack.Item fill>
-                                <Text variant="headingMd" as="h2" fontWeight="bold">Potential Revenue</Text>
-                                <Text variant="headingMd" fontWeight="bold">{summaryData.potentialRevenue} EGP</Text>
-                            </LegacyStack.Item>
-
-                            <Divider orientation="vertical" />
-
-                            <LegacyStack.Item fill>
-                                <Text variant="headingMd" as="h2" fontWeight="bold">Potential Gross Profit</Text>
-                                <Text variant="headingMd" fontWeight="bold">{summaryData.potentialGrossProfit} EGP</Text>
-                            </LegacyStack.Item>
-                        </LegacyStack>
+                              </div>
                     </TextContainer>
                 </LegacyCard>
             </Box>
