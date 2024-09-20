@@ -14,10 +14,10 @@ import {
     TextContainer,
     Text,
     Box,
-    LegacyStack, Divider
+    LegacyStack
 } from '@shopify/polaris';
 
-function Index() {
+function Product12() {
     const [selected, setSelected] = useState(0);
     const [summaryData, setSummaryData] = useState({
         suppliers: 0,
@@ -315,12 +315,16 @@ function Index() {
             },
             index
         ) => (
-            <IndexTable.Row id={id} key={id} selected={selectedResources.includes(id)}>
+            <IndexTable.Row id={id} key={id} selected={selectedResources.includes(id)} position={index}>
+
                 <IndexTable.Cell>
-                    <div style={{ display: "flex", alignItems: "center", gap: '10px' }}>
-                        <Avatar source={'https://static4.depositphotos.com/1013245/356/i/950/depositphotos_3561159-stock-photo-luxuru-black-leather-jacket-isolated.jpg'} />{product}
-                    </div>
+                    <Box style={{display: "flex", alignItems: "center", gap: '10px'}}>
+                        <Avatar
+                            source={'https://static4.depositphotos.com/1013245/356/i/950/depositphotos_3561159-stock-photo-luxuru-black-leather-jacket-isolated.jpg'}/>{product}
+                    </Box>
+
                 </IndexTable.Cell>
+
                 <IndexTable.Cell>{tone}</IndexTable.Cell>
                 <IndexTable.Cell>{inventory}</IndexTable.Cell>
                 <IndexTable.Cell>{type}</IndexTable.Cell>
@@ -345,7 +349,7 @@ function Index() {
     );
 
     return (
-        <Page>
+        <Box>
             <Box paddingBlockEnd={'800'}>
                 <Text variant="headingXl"  alignment={"start"} as="h1" fontWeight="bold">Product</Text>
             </Box>
@@ -460,8 +464,8 @@ function Index() {
                     {rowMarkup}
                 </IndexTable>
             </Card>
-        </Page>
+        </Box>
     );
 }
 
-export default Index;
+export default Product12;
