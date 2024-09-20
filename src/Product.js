@@ -14,8 +14,9 @@ import {
     TextContainer,
     Text,
     Box,
-    LegacyStack
+    LegacyStack, Icon
 } from '@shopify/polaris';
+import {ChevronLeftIcon, ChevronRightIcon} from "@shopify/polaris-icons";
 
 function Product12() {
     const [selected, setSelected] = useState(0);
@@ -353,54 +354,54 @@ function Product12() {
             <Box paddingBlockEnd={'800'}>
                 <Text variant="headingXl"  alignment={"start"} as="h1" fontWeight="bold">Product</Text>
             </Box>
-            <Box  maxWidth="90%" paddingBlockEnd='600' textAlign="center">
+            <Box  maxWidth="70%" paddingBlockEnd='600' textAlign="center">
                 <LegacyCard  sectioned>
                     <TextContainer >
 
-                              <div>
-                                  <LegacyStack distribution="equalSpacing" vertical={false} alignment="center">
-                                      <LegacyStack.Item fill>
-                                          <Text variant="headingMd" as="h2" fontWeight="bold">Suppliers</Text>
-                                          <Text variant="headingMd" fontWeight="bold">{summaryData.suppliers}</Text>
-                                      </LegacyStack.Item>
+                        <div>
+                            <LegacyStack distribution="equalSpacing" vertical={false} alignment="center">
+                                <LegacyStack.Item fill>
+                                    <Text variant="headingMd" as="h2" fontWeight="bold">Suppliers</Text>
+                                    <Text variant="headingMd" fontWeight="bold">{summaryData.suppliers}</Text>
+                                </LegacyStack.Item>
 
-                                      <LegacyStack.Item fill>
-                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'} borderColor="border-subdued">
-                                              <Text variant="headingMd" as="h2" fontWeight="bold">No. Brands</Text>
-                                              <Text variant="headingMd" fontWeight="bold">{summaryData.vendors}</Text>
-                                          </Box>
-                                      </LegacyStack.Item>
+                                <LegacyStack.Item fill>
+                                    <Box borderInlineStartWidth="025" paddingInlineStart={'500'} borderColor="border-subdued">
+                                        <Text variant="headingMd" as="h2" fontWeight="bold">No. Brands</Text>
+                                        <Text variant="headingMd" fontWeight="bold">{summaryData.vendors}</Text>
+                                    </Box>
+                                </LegacyStack.Item>
 
-                                      <LegacyStack.Item fill>
-                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
-                                              <Text variant="headingMd" as="h2" fontWeight="bold">Inventory</Text>
-                                              <Text variant="headingMd" fontWeight="bold">{summaryData.inventory}</Text>
-                                          </Box>
-                                      </LegacyStack.Item>
+                                <LegacyStack.Item fill>
+                                    <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
+                                        <Text variant="headingMd" as="h2" fontWeight="bold">Inventory</Text>
+                                        <Text variant="headingMd" fontWeight="bold">{summaryData.inventory}</Text>
+                                    </Box>
+                                </LegacyStack.Item>
 
-                                      <LegacyStack.Item fill>
-                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
-                                              <Text variant="headingMd" as="h2" fontWeight="bold">Warehouse Locations</Text>
-                                              <Text variant="headingMd" fontWeight="bold">{summaryData.warehouseLocations}</Text>
-                                          </Box>
-                                      </LegacyStack.Item>
+                                <LegacyStack.Item fill>
+                                    <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
+                                        <Text variant="headingMd" as="h2" fontWeight="bold">Warehouse Locations</Text>
+                                        <Text variant="headingMd" fontWeight="bold">{summaryData.warehouseLocations}</Text>
+                                    </Box>
+                                </LegacyStack.Item>
 
-                                      <LegacyStack.Item fill>
-                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
-                                              <Text variant="headingMd" as="h2" fontWeight="bold">Potential Revenue</Text>
-                                              <Text variant="headingMd" fontWeight="bold">{summaryData.potentialRevenue} EGP</Text>
-                                          </Box>
-                                      </LegacyStack.Item>
+                                <LegacyStack.Item fill>
+                                    <Box borderInlineStartWidth="025" paddingInlineStart={'500'}  borderColor="border-subdued">
+                                        <Text variant="headingMd" as="h2" fontWeight="bold">Potential Revenue</Text>
+                                        <Text variant="headingMd" fontWeight="bold">{summaryData.potentialRevenue} EGP</Text>
+                                    </Box>
+                                </LegacyStack.Item>
 
-                                      <LegacyStack.Item fill>
-                                          <Box borderInlineStartWidth="025" paddingInlineStart={'500'} borderColor="border-subdued">
-                                              <Text variant="headingMd" as="h2" fontWeight="bold">Potential Gross Profit</Text>
-                                              <Text variant="headingMd" fontWeight="bold">{summaryData.potentialGrossProfit} EGP</Text>
-                                          </Box>
-                                      </LegacyStack.Item>
-                                  </LegacyStack>
+                                <LegacyStack.Item fill>
+                                    <Box borderInlineStartWidth="025" paddingInlineStart={'500'} borderColor="border-subdued">
+                                        <Text variant="headingMd" as="h2" fontWeight="bold">Potential Gross Profit</Text>
+                                        <Text variant="headingMd" fontWeight="bold">{summaryData.potentialGrossProfit} EGP</Text>
+                                    </Box>
+                                </LegacyStack.Item>
+                            </LegacyStack>
 
-                              </div>
+                        </div>
                     </TextContainer>
                 </LegacyCard>
             </Box>
@@ -439,30 +440,36 @@ function Product12() {
                     }
                     onSelectionChange={handleSelectionChange}
                     headings={[
-                        { title: "Product" },
-                        { title: "Status" },
-                        { title: "Inventory" },
-                        { title: "Type" },
-                        { title: "Vendor" },
-                        { title: "DropShip Supplier" },
-                        { title: 'Warehouse Location' },
-                        { title: 'Subcategory' },
-                        { title: 'Quantity' },
-                        { title: 'Unit Cost' },
-                        { title: 'Cost of Dropshipping Carrier (EUR)' },
-                        { title: 'Unit Cost (USD)' },
-                        { title: 'Unit Cost (EGP)' },
-                        { title: 'Cost of Kg (USD)' },
-                        { title: 'Cost of Gram (USD )' },
-                        { title: 'Unit WeightSupplier (GR)' },
-                        { title: 'Unit Cost Including Weight (USD)' },
-                        { title: 'Unit Cost Including Weight (EGP)' },
-                        { title: 'Cross Margin' },
-                        { title: 'Final Price' }
+                        {title: "Product"},
+                        {title: "Status"},
+                        {title: "Inventory"},
+                        {title: "Type"},
+                        {title: "Vendor"},
+                        {title: "DropShip Supplier"},
+                        {title: 'Warehouse Location'},
+                        {title: 'Subcategory'},
+                        {title: 'Quantity'},
+                        {title: 'Unit Cost'},
+                        {title: 'Cost of Dropshipping Carrier (EUR)'},
+                        {title: 'Unit Cost (USD)'},
+                        {title: 'Unit Cost (EGP)'},
+                        {title: 'Cost of Kg (USD)'},
+                        {title: 'Cost of Gram (USD )'},
+                        {title: 'Unit WeightSupplier (GR)'},
+                        {title: 'Unit Cost Including Weight (USD)'},
+                        {title: 'Unit Cost Including Weight (EGP)'},
+                        {title: 'Cross Margin'},
+                        {title: 'Final Price'}
                     ]}
                 >
                     {rowMarkup}
                 </IndexTable>
+                <div style={{marginTop: '10px', display: 'flex', justifyContent: 'flex-end'}}>
+                    <button style={{border: 'none', background: 'transparent', cursor: 'pointer'}}><Icon
+                        source={ChevronLeftIcon} tone="base"/></button>
+                    <button style={{border: 'none', background: 'transparent', cursor: 'pointer'}}><Icon
+                        source={ChevronRightIcon} tone="base"/></button>
+                </div>
             </Card>
         </Box>
     );
